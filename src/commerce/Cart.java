@@ -18,6 +18,10 @@ public class Cart {
         return cartList;
     }
 
+    public void setCartList(List<Product> cartList) {
+        this.cartList = cartList;
+    }
+
     // 재고 확인
     // 상품을 장바구니에 담을 때 재고를 확인하고, 재고가 부족할 경우 경고 메시지를 출력
     public boolean checkStock(Product product) {
@@ -35,8 +39,9 @@ public class Cart {
             int afterStock = product.getProductStock()-1;
             product.setProductStock(afterStock);
             System.out.println(product.getProductName() + " 재고가 " +
-                    beforeStock + "개 -> " + afterStock + "개로 업데이트 되었습니다.\n");
+                    beforeStock + "개 -> " + afterStock + "개로 업데이트 되었습니다.");
         }
+        System.out.println();
         cartList.clear();
     }
 
@@ -55,6 +60,7 @@ public class Cart {
 
         System.out.println("1. 주문 확정      2. 메인으로 돌아가기");
         int choice = sc.nextInt();
+        System.out.println();
 
         if (choice == 1) {
             System.out.println("주문이 완료되었습니다! 총 금액: " + String.format("%,10d원", totalPrice));

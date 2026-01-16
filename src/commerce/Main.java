@@ -24,9 +24,9 @@ public class Main {
 
         // 3. 식품
         List<Product> foodProducts = new ArrayList<>();
-        clothingProducts.add(new Product("식품1", 20000, "맛있는 식품1", 50));
-        clothingProducts.add(new Product("식품2", 30000, "맛있는 식품2", 60));
-        clothingProducts.add(new Product("식품3", 40000, "맛있는 식품3", 70));
+        foodProducts.add(new Product("식품1", 20000, "맛있는 식품1", 50));
+        foodProducts.add(new Product("식품2", 30000, "맛있는 식품2", 60));
+        foodProducts.add(new Product("식품3", 40000, "맛있는 식품3", 70));
 
         Category food = new Category("식품", foodProducts);
 

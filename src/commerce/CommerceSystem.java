@@ -52,7 +52,8 @@ public class CommerceSystem {
                     if (choice == 4) {
                         cart.showCart();
                     } else {
-                        //cancelOrder();
+                        System.out.println("진행중인 주문을 취소합니다.\n");
+                        cart.setCartList(new ArrayList<>());
                     }
                     break;
 
