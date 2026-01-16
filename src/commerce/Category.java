@@ -1,6 +1,8 @@
 package commerce;
 
+import java.util.ArrayList;
 import java.util.List;
+import static commerce.Product.*;
 
 public class Category {
 
@@ -18,5 +20,16 @@ public class Category {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    /**
+     * 전체 카테고리 생성
+     */
+    public static List<Category> createCategories() {
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category("전자제품", createElectronicsProducts()));
+        categories.add(new Category("의류", createClothingProducts()));
+        categories.add(new Category("식품", createFoodProducts()));
+        return categories;
     }
 }

@@ -8,12 +8,15 @@ public class CommerceSystem {
 
     private final List<Category> categories;
     private final Scanner sc = new Scanner(System.in);
-    private Cart cart = new Cart();
+    private final Cart cart = new Cart();
 
-    public CommerceSystem(List<Category> categories) {
-        this.categories = categories;
+    public CommerceSystem() {
+        this.categories = Category.createCategories();
     }
 
+    /**
+     * 메인 화면 출력하는 메서드
+     */
     public void showCategory() {
         System.out.println("[ 실시간 커머스 플랫폼 메인 ]");
         for (int i = 0; i < categories.size(); i++) {
@@ -30,6 +33,9 @@ public class CommerceSystem {
 
     }
 
+    /**
+     * 시작 메서드 (카테고리 선택)
+     */
     public void start() {
         while (true) {
             showCategory();
@@ -63,6 +69,10 @@ public class CommerceSystem {
         }
     }
 
+    /**
+     * 특정 카테고리의 상품 선택 메서드
+     * @param category
+     */
     public void chooseProduct(Category category) {
         List<Product> products = category.getProducts();
 
