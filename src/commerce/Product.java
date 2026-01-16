@@ -17,4 +17,8 @@ public class Product {
     public String toString() {
         return  String.format("%-12s | %,10d원 | %-20s", productName, productPrice, productExplanation);
     }
+
+    public String toString2() {
+        return  String.format("%-12s | %,10d원 | %-15s | 재고: %3d개", productName, productPrice, productExplanation, productStock);
+    }
 }
