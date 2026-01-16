@@ -5,18 +5,20 @@ import java.util.*;
 public class Cart {
 
     private final Scanner sc = new Scanner(System.in);
-    private List<Product> cartList = new ArrayList<>();
     // 장바구니에 같은 상품을 몇번 넣었는지 알기위해 장바구니용 수량 값이 필요함
     // 상품과 수량을 같이 관리하기 위해 Map 사용 (키 = Product, 값 = 수량)
     // HashMap = 순서없음, LinkedHashMap = 넣은 순서 유지
     private Map<Product, Integer> cartItems = new LinkedHashMap<>();
 
-    public List<Product> getCartList() {
-        return cartList;
+    public Map<Product, Integer> getCartItems() {
+        return cartItems;
     }
 
-    public void setCartList(List<Product> cartList) {
-        this.cartList = cartList;
+    /**
+     * 장바구니 비우기 기능 (초기화)
+     */
+    public void clear() {
+        cartItems.clear();
     }
 
     /**
@@ -43,7 +45,8 @@ public class Cart {
         }
 
         if (check && choice == 1) {
-            cartList.add(product);
+            // getOrDefault 장바구니에 있으면 → 현재 수량 + 1, 없으면 → 0 + 1
+            cartItems.put(product, cartItems.getOrDefault(product, 0) + 1);
             System.out.println(product.getProductName() + "가 장바구니에 추가되었습니다.\n");
         }
     }
@@ -70,11 +73,12 @@ public class Cart {
         int totalPrice = 0;
         System.out.println("아래와 같이 주문 하시겠습니까?\n");
         System.out.println("[ 장바구니 내역 ]");
-        for (Product product : cartList) {
-            totalPrice += product.getProductPrice();
-            System.out.println(product.toString2());
+        for (Product product : cartItems.keySet()) {
+            int count = cartItems.get(product);
+            totalPrice += product.getProductPrice() * count;
+            System.out.println(product.getProductName() + " | " + String.format("%,d원", product.getProductPrice()) + " | 수량: " + count + "개");
         }
-        System.out.println("[ 총 주문 금액 ]");
+        System.out.println("\n[ 총 주문 금액 ]");
         System.out.println(String.format("%,10d원", totalPrice) + "\n");
 
         System.out.println("1. 주문 확정      2. 메인으로 돌아가기");
@@ -96,15 +100,16 @@ public class Cart {
      * 재고 줄이기 - 장바구니에 담긴 상품의 재고를 1씩 줄이고 장바구니 초기화
      */
     public void reduceStock() {
-        for (Product product : cartList) {
+        for (Product product : cartItems.keySet()) {
+            int count = cartItems.get(product);
             int beforeStock = product.getProductStock();
-            int afterStock = product.getProductStock()-1;
+            int afterStock = product.getProductStock() - count;
             product.setProductStock(afterStock);
             System.out.println(product.getProductName() + " 재고가 " +
                     beforeStock + "개 -> " + afterStock + "개로 업데이트 되었습니다.");
         }
         System.out.println();
-        cartList.clear();
+        clear();
     }
 
 }

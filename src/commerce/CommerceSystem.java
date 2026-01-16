@@ -1,6 +1,7 @@
 package commerce;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class CommerceSystem {
         }
         System.out.println("0. 종료        | 프로그램 종료");
 
-        if (!cart.getCartList().isEmpty()) {
+        if (!cart.getCartItems().isEmpty()) {
             System.out.println();
             System.out.println("[ 주문 관리 ]");
             System.out.println("4. 장바구니 확인   | 장바구니를 확인 후 주문합니다.");
@@ -52,14 +53,14 @@ public class CommerceSystem {
                     break;
                 case 4:
                 case 5:
-                    if (cart.getCartList().isEmpty()) {
+                    if (cart.getCartItems().isEmpty()) {
                         throw new IllegalStateException("장바구니가 비어 있습니다.");
                     }
                     if (choice == 4) {
                         cart.showCart();
                     } else {
                         System.out.println("진행중인 주문을 취소합니다.\n");
-                        cart.setCartList(new ArrayList<>());
+                        cart.clear();
                     }
                     break;
 
