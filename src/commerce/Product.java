@@ -33,4 +33,8 @@ public class Product {
     public int getProductStock() {
         return productStock;
     }
+
+    public void setProductStock(int productStock) {
+        this.productStock = productStock;
+    }
 }

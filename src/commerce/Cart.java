@@ -29,8 +29,15 @@ public class Cart {
         }
     }
 
-    public void reduceStock(Product product) {
-
+    public void reduceStock() {
+        for (Product product : cartList) {
+            int beforeStock = product.getProductStock();
+            int afterStock = product.getProductStock()-1;
+            product.setProductStock(afterStock);
+            System.out.println(product.getProductName() + " 재고가 " +
+                    beforeStock + "개 -> " + afterStock + "개로 업데이트 되었습니다.\n");
+        }
+        cartList.clear();
     }
 
     // 장바구니 출력 및 금액 계산
@@ -51,9 +58,17 @@ public class Cart {
 
         if (choice == 1) {
             System.out.println("주문이 완료되었습니다! 총 금액: " + String.format("%,10d원", totalPrice));
+            reduceStock();
         } else if (choice == 2) {
             return;
+        } else {
+            System.out.println("잘못된 입력입니다.");
+            return;
         }
+    }
+
+    public void confirmOrder() {
+
     }
 
     // 장바구니 담기 기능

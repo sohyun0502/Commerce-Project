@@ -8,7 +8,7 @@ public class CommerceSystem {
 
     private final List<Category> categories;
     private final Scanner sc = new Scanner(System.in);
-    private Cart cart;
+    private Cart cart = new Cart();
 
     public CommerceSystem(List<Category> categories) {
         this.categories = categories;
@@ -37,7 +37,7 @@ public class CommerceSystem {
 
             switch (choice) {
                 case 0:
-                    System.out.println("프로그램 종료");
+                    System.out.println("커머스 플랫폼을 종료합니다.");
                     return;
                 case 1:
                 case 2:
@@ -84,7 +84,6 @@ public class CommerceSystem {
 
         Product selectedProduct = products.get(choice - 1);
         System.out.println("선택한 상품: " + selectedProduct.toString2() + "\n");
-        cart = new Cart();
         cart.addToCart(selectedProduct);
     }
 
