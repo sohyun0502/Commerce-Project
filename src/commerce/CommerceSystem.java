@@ -12,7 +12,7 @@ public class CommerceSystem {
         this.categories = categories;
     }
 
-    public void chooseCategory() {
+    public void start() {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -64,6 +64,8 @@ public class CommerceSystem {
 
         Product selectedProduct = products.get(choice - 1);
         printProduct(selectedProduct);
+
+        sc.close();
     }
 
     private void printProduct(Product product) {
