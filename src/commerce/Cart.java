@@ -97,7 +97,7 @@ public class Cart {
     }
 
     /**
-     * 재고 줄이기 - 장바구니에 담긴 상품의 재고를 1씩 줄이고 장바구니 초기화
+     * 재고 줄이기 - 상품의 재고를 수량 만큼 줄이고 장바구니 초기화
      */
     public void reduceStock() {
         for (Product product : cartItems.keySet()) {

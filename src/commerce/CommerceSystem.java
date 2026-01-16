@@ -7,23 +7,26 @@ import java.util.Scanner;
 
 public class CommerceSystem {
 
-    private final List<Category> categories;
+    private List<Category> categories;
     private final Scanner sc = new Scanner(System.in);
-    private final Cart cart = new Cart();
+    private Cart cart = new Cart();
+    private Administrator admin;
 
     public CommerceSystem() {
         this.categories = Category.createCategories();
+        this.admin = new Administrator(categories);
     }
 
     /**
      * 메인 화면 출력하는 메서드
      */
     public void showCategory() {
-        System.out.println("[ 실시간 커머스 플랫폼 메인 ]");
+        System.out.println("\n[ 실시간 커머스 플랫폼 메인 ]");
         for (int i = 0; i < categories.size(); i++) {
             System.out.println((i + 1) + ". " + categories.get(i).getCategoryName());
         }
         System.out.println("0. 종료        | 프로그램 종료");
+        System.out.println("6. 관리자 모드");
 
         if (!cart.getCartItems().isEmpty()) {
             System.out.println();
@@ -63,7 +66,10 @@ public class CommerceSystem {
                         cart.clear();
                     }
                     break;
-
+                case 6:
+                    admin.setPassword("admin123");
+                    admin.checkPassword();
+                    break;
                 default:
                     System.out.println("잘못된 입력입니다.");
             }
@@ -77,7 +83,7 @@ public class CommerceSystem {
     public void chooseProduct(Category category) {
         List<Product> products = category.getProducts();
 
-        System.out.println("[ " + category.getCategoryName() + " 카테고리 ]");
+        System.out.println("\n[ " + category.getCategoryName() + " 카테고리 ]");
         for( int i = 0; i < category.getProducts().size(); i++ ) {
             System.out.println((i+1) + ". " + category.getProducts().get(i).toString());
         }
