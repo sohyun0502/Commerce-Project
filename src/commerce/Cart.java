@@ -1,18 +1,15 @@
 package commerce;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Cart {
-    // 상품명, 수량, 가격정보
-    private String productName;
-    private int productPrice;
-    private String productExplanation;
-    private int productAmount;
 
     private final Scanner sc = new Scanner(System.in);
     private List<Product> cartList = new ArrayList<>();
+    // 장바구니에 같은 상품을 몇번 넣었는지 알기위해 장바구니용 수량 값이 필요함
+    // 상품과 수량을 같이 관리하기 위해 Map 사용 (키 = Product, 값 = 수량)
+    // HashMap = 순서없음, LinkedHashMap = 넣은 순서 유지
+    private Map<Product, Integer> cartItems = new LinkedHashMap<>();
 
     public List<Product> getCartList() {
         return cartList;
