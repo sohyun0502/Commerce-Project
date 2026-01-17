@@ -22,10 +22,34 @@ public class Cart {
     }
 
     /**
-     * 장바구니에서 상품 제거하는 기능
+     * 장바구니에서 상품 제거하는 기능 (Product 객체로 삭제)
      */
     public void removeProduct(Product product) {
         cartItems.remove(product);
+    }
+
+    /**
+     * 장바구니에서 상품 제거하는 기능 (productName 으로 삭제)
+     */
+    public void removeProductByName(String productName) {
+        if (cartItems.isEmpty()) {
+            System.out.println("장바구니가 비어 있습니다.");
+            return;
+        }
+
+        // 1️. 제거할 상품 찾기 (stream.filter 사용)
+        Optional<Product> productToRemove = cartItems.keySet()
+                        .stream()
+                        .filter(p -> p.getProductName().equals(productName))
+                        .findFirst();
+
+        // 2️. 결과 처리
+        if (productToRemove.isPresent()) {
+            cartItems.remove(productToRemove.get());
+            System.out.println(productName + " 상품이 장바구니에서 제거되었습니다.");
+        } else {
+            System.out.println(productName + " 상품이 장바구니에 없습니다.");
+        }
     }
 
     /**
@@ -88,7 +112,7 @@ public class Cart {
         System.out.println("\n[ 총 주문 금액 ]");
         System.out.println(String.format("%,d원", totalPrice) + "\n");
 
-        System.out.println("1. 주문 확정      2. 메인으로 돌아가기");
+        System.out.println("1. 주문 확정    2. 상품 제거    3. 메인으로 돌아가기");
         int choice = sc.nextInt();
         System.out.println();
 
@@ -105,6 +129,11 @@ public class Cart {
             System.out.println("최종 결제 금액: " + String.format("%,d원", (totalPrice-lastPrice2)));
             reduceStock();
         } else if (choice == 2) {
+            System.out.print("제거할 상품명을 입력하세요: ");
+            sc.nextLine(); // 개행 제거
+            String name = sc.nextLine();
+            removeProductByName(name);
+        } else if (choice == 3) {
             return;
         } else {
             System.out.println("잘못된 입력입니다.");
