@@ -207,6 +207,16 @@ public class Administrator {
 
     // 전체 Product 출력
     public void showAllProduct() {
+        Product product = null;
 
+        System.out.println("[ 전체 상품 ]");
+        for (int i = 0; i < categories.size(); i++) {
+            System.out.println("\n[ " + categories.get(i).getCategoryName() + " ]");
+            for(int j = 0; j < categories.get(i).getProducts().size(); j++) {
+                product = categories.get(i).getProducts().get(j);
+                System.out.println(String.format("%-12s | %,10d원 | %-15s | 재고: %3d개",
+                        product.getProductName(), product.getProductPrice(), product.getProductExplanation(), product.getProductStock()));
+            }
+        }
     }
 }
