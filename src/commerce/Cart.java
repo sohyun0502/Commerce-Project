@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Cart {
 
-    private final Scanner sc = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
     // 장바구니에 같은 상품을 몇번 넣었는지 알기위해 장바구니용 수량 값이 필요함
     // 상품과 수량을 같이 관리하기 위해 Map 사용 (키 = Product, 값 = 수량)
     // HashMap = 순서없음, LinkedHashMap = 넣은 순서 유지
@@ -86,14 +86,23 @@ public class Cart {
             System.out.println(product.getProductName() + " | " + String.format("%,d원", product.getProductPrice()) + " | 수량: " + count + "개");
         }
         System.out.println("\n[ 총 주문 금액 ]");
-        System.out.println(String.format("%,10d원", totalPrice) + "\n");
+        System.out.println(String.format("%,d원", totalPrice) + "\n");
 
         System.out.println("1. 주문 확정      2. 메인으로 돌아가기");
         int choice = sc.nextInt();
         System.out.println();
 
         if (choice == 1) {
-            System.out.println("주문이 완료되었습니다! 총 금액: " + String.format("%,10d원", totalPrice));
+            Customer customer = new Customer();
+            CustomerLevel customerLevel = customer.chooseCustomerLevel();
+
+            double discount = customerLevel.getDiscount();
+            double lastPrice = (double) totalPrice * (discount/100.0);
+            int lastPrice2 = (int) lastPrice;
+
+            System.out.println("\n주문이 완료되었습니다! \n할인 전 금액: " + String.format("%,d원", totalPrice));
+            System.out.println(customerLevel + " 등급 할인(" + customerLevel.getDiscount() + "%): " + String.format("-%,d원", lastPrice2));
+            System.out.println("최종 결제 금액: " + String.format("%,d원", (totalPrice-lastPrice2)));
             reduceStock();
         } else if (choice == 2) {
             return;
