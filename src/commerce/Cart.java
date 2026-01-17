@@ -38,7 +38,7 @@ public class Cart {
         boolean check = checkStock(product);
 
         product.toString();
-        System.out.println("위 상품을 장바구니에 추가하시겠습니까?");
+        System.out.println("\n위 상품을 장바구니에 추가하시겠습니까?");
         System.out.println("1. 확인        2. 취소");
         int choice = sc.nextInt();
 

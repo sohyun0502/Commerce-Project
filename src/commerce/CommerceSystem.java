@@ -2,6 +2,8 @@ package commerce;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 public class CommerceSystem {
 
@@ -82,27 +84,66 @@ public class CommerceSystem {
      * @param category
      */
     public void chooseProduct(Category category) {
-        List<Product> products = category.getProducts();
+        while (true) {
+            System.out.println("\n[ " + category.getCategoryName() + " 카테고리 ]");
+            System.out.println("1. 전체 상품 보기");
+            System.out.println("2. 가격대별 필터링 (100만원 이하)");
+            System.out.println("3. 가격대별 필터링 (100만원 초과)");
+            System.out.println("0. 뒤로가기");
 
-        System.out.println("\n[ " + category.getCategoryName() + " 카테고리 ]");
-        for( int i = 0; i < category.getProducts().size(); i++ ) {
-            System.out.println((i+1) + ". " + category.getProducts().get(i).toString());
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    showFilteredProducts(category, p -> true, "전체 상품 목록");
+                    break;
+                case 2:
+                    showFilteredProducts(category, p -> p.getProductPrice() <= 1_000_000, "100만원 이하 상품 목록");
+                    break;
+                case 3:
+                    showFilteredProducts(category, p -> p.getProductPrice() > 1_000_000, "100만원 초과 상품 목록");
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다.");
+            }
         }
+    }
+
+    /**
+     * 필터된 상품 출력 + 선택 메서드
+     * @param category
+     * @param filter
+     * @param title
+     */
+    private void showFilteredProducts(Category category, Predicate<Product> filter, String title) {
+        List<Product> filteredProducts = category.getProducts().stream()
+                                        .filter(filter)
+                                        .toList();
+
+        if (filteredProducts.isEmpty()) {
+            System.out.println("\n상품이 없습니다.");
+            return;
+        }
+
+        System.out.println("\n[ " + title + " ]");
+
+        IntStream.range(0, filteredProducts.size())
+                .forEach(i -> System.out.println((i + 1) + ". " + filteredProducts.get(i)));
+
         System.out.println("0. 뒤로가기");
 
         int choice = sc.nextInt();
 
-        if (choice == 0) {
-            return;
-        }
+        if (choice == 0) return;
 
-        if (choice < 1 || choice > products.size()) {
+        if (choice < 1 || choice > filteredProducts.size()) {
             System.out.println("잘못된 입력입니다.");
             return;
         }
 
-        Product selectedProduct = products.get(choice - 1);
-        System.out.println("선택한 상품: " + selectedProduct.toString2() + "\n");
+        Product selectedProduct = filteredProducts.get(choice - 1);
         cart.addToCart(selectedProduct);
     }
 
