@@ -168,7 +168,41 @@ public class Administrator {
 
     // Product 삭제 기능
     public void deleteProduct() {
+        sc.nextLine();
+        System.out.print("\n삭제할 상품명을 입력해주세요: ");
+        String productName = sc.nextLine();
+        Product product = null;
 
+        for (int i = 0; i < categories.size(); i++) {
+            for(int j = 0; j < categories.get(i).getProducts().size(); j++) {
+                if (productName.equals(categories.get(i).getProducts().get(j).getProductName())) {
+                    product = categories.get(i).getProducts().get(j);
+                    System.out.println("상품 정보: " + String.format("%-12s | %,10d원 | %-15s | 재고: %3d개",
+                            product.getProductName(), product.getProductPrice(), product.getProductExplanation(), product.getProductStock()));
+                }
+            }
+        }
+
+        if(product == null) {
+            System.out.println("일치하는 상품이 없습니다.");
+            return;
+        }
+
+        System.out.println("\n위 상품을 삭제하시겠습니까?");
+        System.out.println("1. 확인   2. 취소");
+        int choice = sc.nextInt();
+
+        if (choice == 1) {
+            for (int i = 0; i < categories.size(); i++) {
+                categories.get(i).getProducts().remove(product);
+            }
+            System.out.println("상품이 성공적으로 삭제되었습니다!\n");
+        }  else if (choice == 2) {
+            return;
+        } else {
+            System.out.println("잘못된 입력입니다.");
+            return;
+        }
     }
 
     // 전체 Product 출력
