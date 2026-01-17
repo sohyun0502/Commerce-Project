@@ -33,8 +33,24 @@ public class Product {
         return productPrice;
     }
 
+    public String getProductExplanation() {
+        return productExplanation;
+    }
+
     public int getProductStock() {
         return productStock;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public void setProductExplanation(String productExplanation) {
+        this.productExplanation = productExplanation;
     }
 
     public void setProductStock(int productStock) {
