@@ -7,10 +7,12 @@ public class Administrator {
 
     private Scanner sc = new Scanner(System.in);
     private List<Category> categories;
+    private CommerceSystem commerceSystem;
     private final String password = "admin123";
 
-    public Administrator(List<Category> categories) {
+    public Administrator(List<Category> categories, CommerceSystem commerceSystem) {
         this.categories = categories;
+        this.commerceSystem = commerceSystem;
     }
 
     // 관리자 인증 기능
@@ -212,7 +214,10 @@ public class Administrator {
         int choice = Integer.parseInt(sc.nextLine());
 
         if (choice == 1) {
+            // 상품 삭제
             targetCategory.removeProduct(targetProduct);
+            // 장바구니에서도 삭제
+            commerceSystem.getCart().removeProduct(targetProduct);
             System.out.println("상품이 성공적으로 삭제되었습니다!\n");
         }  else if (choice == 2) {
             return;

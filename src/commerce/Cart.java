@@ -22,6 +22,13 @@ public class Cart {
     }
 
     /**
+     * 장바구니에서 상품 제거하는 기능
+     */
+    public void removeProduct(Product product) {
+        cartItems.remove(product);
+    }
+
+    /**
      * 장바구니 담기
      * 상품을 선택하면 장바구니에 추가할 지 물어보고, 입력값에 따라 "추가", "취소" 처리
      * 장바구니에 담은 목록을 출력

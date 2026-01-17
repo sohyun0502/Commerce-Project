@@ -12,7 +12,11 @@ public class CommerceSystem {
 
     public CommerceSystem() {
         this.categories = Category.createCategories();
-        this.admin = new Administrator(categories);
+        this.admin = new Administrator(categories, this);
+    }
+
+    public Cart getCart() {
+        return cart;
     }
 
     /**
