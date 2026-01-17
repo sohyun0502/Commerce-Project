@@ -22,6 +22,16 @@ public class Category {
         return products;
     }
 
+    // 상품 추가 기능
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    // 상품 삭제 기능
+    public void removeProduct(Product product) {
+        products.remove(product);
+    }
+
     /**
      * 전체 카테고리 생성
      */

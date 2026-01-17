@@ -65,7 +65,6 @@ public class CommerceSystem {
                     }
                     break;
                 case 6:
-                    admin.setPassword("admin123");
                     admin.checkPassword();
                     break;
                 default:
