@@ -7,8 +7,8 @@ import java.util.stream.IntStream;
 
 public class CommerceSystem {
 
+    private Scanner sc = new Scanner(System.in);
     private List<Category> categories;
-    private final Scanner sc = new Scanner(System.in);
     private Cart cart = new Cart();
     private Administrator admin;
 
@@ -153,7 +153,10 @@ public class CommerceSystem {
         cart.addToCart(selectedProduct);
     }
 
-    // 공통 숫자 입력 메서드 (예외처리)
+    /**
+     * 공통 숫자 입력 메서드 (예외처리)
+     * @return
+     */
     private int readInt() {
         try {
             return Integer.parseInt(sc.nextLine());

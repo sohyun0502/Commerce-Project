@@ -156,7 +156,10 @@ public class Cart {
         clear();
     }
 
-    // 공통 숫자 입력 메서드 (예외처리)
+    /**
+     * 공통 숫자 입력 메서드 (예외처리)
+     * @return
+     */
     private int readInt() {
         try {
             return Integer.parseInt(sc.nextLine());

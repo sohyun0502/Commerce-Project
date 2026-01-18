@@ -6,6 +6,7 @@ import static commerce.Product.*;
 
 public class Category {
 
+    // 카테고리 이름, 상품 리스트
     private String categoryName;
     private List<Product> products;
 

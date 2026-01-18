@@ -15,8 +15,10 @@ public class Administrator {
         this.commerceSystem = commerceSystem;
     }
 
-    // 관리자 인증 기능
-    // 비밀번호 입력 시 3회 실패하면 메인 메뉴로 돌아가기
+    /**
+     * 관리자 인증 기능
+     * 비밀번호 입력 시 3회 실패하면 메인 메뉴로 돌아가기
+     */
     public void checkPassword() {
         int failCount = 0;
 
@@ -36,7 +38,9 @@ public class Administrator {
         System.out.println("\n비밀번호 입력 3회 실패. 메인 메뉴로 돌아갑니다.");
     }
 
-    // 관리자 모드 메뉴 출력
+    /**
+     * 관리자 모드 메뉴 출력
+     */
     public void showAdminMode() {
         boolean isAdminMode = true;
 
@@ -71,7 +75,9 @@ public class Administrator {
         }
     }
 
-    // Product 추가 기능
+    /**
+     * 상품 추가 기능
+     */
     public void addProduct() {
         System.out.println("\n어느 카테고리에 상품을 추가하시겠습니까?");
         for (int i = 0; i < categories.size(); i++) {
@@ -117,7 +123,9 @@ public class Administrator {
         }
     }
 
-    // Product 수정 기능 (화면 선택)
+    /**
+     * 상품 수정 기능 (선택 화면 출력)
+     */
     public void showUpdateProduct() {
         System.out.print("\n수정할 상품명을 입력해주세요: ");
         String productName = sc.nextLine();
@@ -161,6 +169,11 @@ public class Administrator {
         }
     }
 
+    /**
+     * 실제 상품 수정 메서드
+     * @param choice
+     * @param product
+     */
     public void updateProduct(int choice, Product product) {
         if (choice == 1) {
             int beforePrice = product.getProductPrice();
@@ -192,7 +205,9 @@ public class Administrator {
         }
     }
 
-    // Product 삭제 기능
+    /**
+     * 상품 삭제 기능
+     */
     public void deleteProduct() {
         System.out.print("\n삭제할 상품명을 입력해주세요: ");
         String productName = sc.nextLine();
@@ -218,7 +233,7 @@ public class Administrator {
             return;
         }
 
-        System.out.println("\n" + targetProduct.toString2());
+        System.out.println("\n" + targetProduct.toString());
         System.out.println("위 상품을 삭제하시겠습니까?");
         System.out.println("1. 확인   2. 취소");
         int choice = readInt();
@@ -240,7 +255,9 @@ public class Administrator {
         }
     }
 
-    // 전체 Product 출력
+    /**
+     * 전체 상품 목록 출력
+     */
     public void showAllProduct() {
         for (Category category : categories) {
             System.out.println("\n[ " + category.getCategoryName() + " ]");
@@ -261,7 +278,10 @@ public class Administrator {
         }
     }
 
-    // 공통 숫자 입력 메서드 (예외처리)
+    /**
+     * 공통 숫자 입력 메서드 (예외처리)
+     * @return
+     */
     private int readInt() {
         try {
             return Integer.parseInt(sc.nextLine());
