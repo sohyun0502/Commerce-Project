@@ -45,14 +45,17 @@ public class CommerceSystem {
      * 시작 메서드 (카테고리 선택)
      */
     public void start() {
-        while (true) {
+        boolean isRunning = true;
+
+        while (isRunning) {
             showCategory();
-            int choice = sc.nextInt();
+            int choice = readInt();
 
             switch (choice) {
                 case 0:
                     System.out.println("커머스 플랫폼을 종료합니다.");
-                    return;
+                    isRunning = false;
+                    break;
                 case 1:
                 case 2:
                 case 3:
@@ -61,7 +64,7 @@ public class CommerceSystem {
                 case 4:
                 case 5:
                     if (cart.getCartItems().isEmpty()) {
-                        throw new IllegalStateException("장바구니가 비어 있습니다.");
+                        System.out.println("장바구니가 비어 있습니다.");
                     }
                     if (choice == 4) {
                         cart.showCart();
@@ -84,14 +87,16 @@ public class CommerceSystem {
      * @param category
      */
     public void chooseProduct(Category category) {
-        while (true) {
+        boolean isRunning = true;
+
+        while (isRunning) {
             System.out.println("\n[ " + category.getCategoryName() + " 카테고리 ]");
             System.out.println("1. 전체 상품 보기");
             System.out.println("2. 가격대별 필터링 (100만원 이하)");
             System.out.println("3. 가격대별 필터링 (100만원 초과)");
             System.out.println("0. 뒤로가기");
 
-            int choice = sc.nextInt();
+            int choice = readInt();
 
             switch (choice) {
                 case 1:
@@ -104,7 +109,8 @@ public class CommerceSystem {
                     showFilteredProducts(category, p -> p.getProductPrice() > 1_000_000, "100만원 초과 상품 목록");
                     break;
                 case 0:
-                    return;
+                    isRunning = false;
+                    break;
                 default:
                     System.out.println("잘못된 입력입니다.");
             }
@@ -134,7 +140,7 @@ public class CommerceSystem {
 
         System.out.println("0. 뒤로가기");
 
-        int choice = sc.nextInt();
+        int choice = readInt();
 
         if (choice == 0) return;
 
@@ -147,4 +153,12 @@ public class CommerceSystem {
         cart.addToCart(selectedProduct);
     }
 
+    // 공통 숫자 입력 메서드 (예외처리)
+    private int readInt() {
+        try {
+            return Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
 }

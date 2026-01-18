@@ -64,7 +64,7 @@ public class Cart {
         product.toString();
         System.out.println("\n위 상품을 장바구니에 추가하시겠습니까?");
         System.out.println("1. 확인        2. 취소");
-        int choice = sc.nextInt();
+        int choice = readInt();
 
         if (choice == 2) {
             return;
@@ -113,7 +113,7 @@ public class Cart {
         System.out.println(String.format("%,d원", totalPrice) + "\n");
 
         System.out.println("1. 주문 확정    2. 상품 제거    3. 메인으로 돌아가기");
-        int choice = sc.nextInt();
+        int choice = readInt();
         System.out.println();
 
         if (choice == 1) {
@@ -130,7 +130,6 @@ public class Cart {
             reduceStock();
         } else if (choice == 2) {
             System.out.print("제거할 상품명을 입력하세요: ");
-            sc.nextLine(); // 개행 제거
             String name = sc.nextLine();
             removeProductByName(name);
         } else if (choice == 3) {
@@ -157,4 +156,13 @@ public class Cart {
         clear();
     }
 
+    // 공통 숫자 입력 메서드 (예외처리)
+    private int readInt() {
+        try {
+            return Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("숫자만 입력해주세요.");
+            return -1;
+        }
+    }
 }

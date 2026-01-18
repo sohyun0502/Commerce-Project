@@ -38,18 +38,21 @@ public class Administrator {
 
     // 관리자 모드 메뉴 출력
     public void showAdminMode() {
-        while(true) {
+        boolean isAdminMode = true;
+
+        while(isAdminMode) {
             System.out.println("\n[ 관리자 모드 ]");
             System.out.println("1. 상품 추가");
             System.out.println("2. 상품 수정");
             System.out.println("3. 상품 삭제");
             System.out.println("4. 전체 상품 현황");
             System.out.println("0. 메인으로 돌아가기");
-            int choice = Integer.parseInt(sc.nextLine());
+            int choice = readInt();
 
             switch (choice) {
                 case 0:
-                    return;
+                    isAdminMode = false;
+                    break;
                 case 1:
                     addProduct();
                     break;
@@ -74,7 +77,13 @@ public class Administrator {
         for (int i = 0; i < categories.size(); i++) {
             System.out.println((i + 1) + ". " + categories.get(i).getCategoryName());
         }
-        int choice = Integer.parseInt(sc.nextLine());
+        int choice = readInt();
+
+        if (choice < 1 || choice > categories.size()) {
+            System.out.println("존재하지 않는 카테고리입니다.");
+            return;
+        }
+
         Category category = categories.get(choice - 1);
 
         System.out.println("\n[ " + category.getCategoryName() + " 카테고리에 상품 추가 ]");
@@ -83,18 +92,18 @@ public class Administrator {
         String productName = sc.nextLine();
 
         System.out.print("가격을 입력해주세요: ");
-        int productPrice = Integer.parseInt(sc.nextLine());
+        int productPrice = readInt();
 
         System.out.print("상품 설명을 입력해주세요: ");
         String productExplanation = sc.nextLine();
 
         System.out.print("재고수량을 입력해주세요: ");
-        int productStock = Integer.parseInt(sc.nextLine());
+        int productStock = readInt();
 
         System.out.println("\n"+String.format("%-12s | %,10d원 | %-15s | 재고: %3d개", productName, productPrice, productExplanation, productStock));
         System.out.println("위 정보로 상품을 추가하시겠습니까?");
         System.out.println("1. 확인   2. 취소");
-        int choice2 = Integer.parseInt(sc.nextLine());
+        int choice2 = readInt();
 
         if (choice2 == 1) {
             Product product = new Product(productName, productPrice, productExplanation, productStock);
@@ -118,7 +127,7 @@ public class Administrator {
 
         for (Category category : categories) {
             for (Product product : category.getProducts()) {
-                if (product.getProductName().equals(productName)) {
+                if (product.getProductName().equalsIgnoreCase(productName.trim())) {
                     targetProduct = product;
                     targetCategory = category;
                     System.out.println("현재 상품 정보: " + String.format("%-12s | %,10d원 | %-15s | 재고: %3d개",
@@ -139,7 +148,7 @@ public class Administrator {
         System.out.println("1. 가격");
         System.out.println("2. 설명");
         System.out.println("3. 재고수량");
-        int choice = Integer.parseInt(sc.nextLine());
+        int choice = readInt();
 
         switch (choice) {
             case 1:
@@ -155,9 +164,9 @@ public class Administrator {
     public void updateProduct(int choice, Product product) {
         if (choice == 1) {
             int beforePrice = product.getProductPrice();
-            System.out.println("현재 가격: " + String.format("%,10d원", product.getProductPrice()));
+            System.out.println("\n현재 가격: " + String.format("%,10d원", product.getProductPrice()));
             System.out.print("새로운 가격을 입력해주세요: ");
-            int newPrice = Integer.parseInt(sc.nextLine());
+            int newPrice = readInt();
             product.setProductPrice(newPrice);
             int afterPrice = product.getProductPrice();
             System.out.println("\n"+ product.getProductName() + "의 가격이 " + String.format("%,10d원", beforePrice) +
@@ -175,7 +184,7 @@ public class Administrator {
             int beforeStock = product.getProductStock();
             System.out.println("현재 재고수량: " + String.format("%3d개", product.getProductStock()));
             System.out.print("새로운 재고수량을 입력해주세요: ");
-            int newStock = Integer.parseInt(sc.nextLine());
+            int newStock = readInt();
             product.setProductStock(newStock);
             int afterStock = product.getProductStock();
             System.out.println("\n"+ product.getProductName() + "의 재고수량이 " + String.format("%3d개", beforeStock) +
@@ -209,15 +218,19 @@ public class Administrator {
             return;
         }
 
-        System.out.println("\n위 상품을 삭제하시겠습니까?");
+        System.out.println("\n" + targetProduct.toString2());
+        System.out.println("위 상품을 삭제하시겠습니까?");
         System.out.println("1. 확인   2. 취소");
-        int choice = Integer.parseInt(sc.nextLine());
+        int choice = readInt();
 
         if (choice == 1) {
             // 상품 삭제
             targetCategory.removeProduct(targetProduct);
             // 장바구니에서도 삭제
-            commerceSystem.getCart().removeProduct(targetProduct);
+            Cart cart = commerceSystem.getCart();
+            if (cart != null) {
+                cart.removeProduct(targetProduct);
+            }
             System.out.println("상품이 성공적으로 삭제되었습니다!\n");
         }  else if (choice == 2) {
             return;
@@ -245,6 +258,15 @@ public class Administrator {
                                 product.getProductStock() + "개"
                 );
             }
+        }
+    }
+
+    // 공통 숫자 입력 메서드 (예외처리)
+    private int readInt() {
+        try {
+            return Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            return -1;
         }
     }
 }
