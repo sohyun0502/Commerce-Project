@@ -127,6 +127,7 @@ public class Cart {
             Customer loginCustomer;
 
             try {
+                // 고객을 이메일로 결정
                 loginCustomer = customer.chooseCustomer();
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());

@@ -74,6 +74,10 @@ public class Customer {
         return customer;
     }
 
+    /**
+     * 누적 금액에 따른 고객 등급 변경하는 메서드
+     * @param price
+     */
     public void updateLevel(int price) {
         this.totalPrice += price;
         CustomerLevel newLevel = CustomerLevel.fromTotalPrice(this.totalPrice);
