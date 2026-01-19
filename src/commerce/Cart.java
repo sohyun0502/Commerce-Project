@@ -59,7 +59,6 @@ public class Cart {
      * @param product
      */
     public void addToCart(Product product) {
-        boolean check = checkStock(product);
 
         product.toString();
         System.out.println("\n위 상품을 장바구니에 추가하시겠습니까?");
@@ -75,10 +74,17 @@ public class Cart {
             return;
         }
 
-        if (check && choice == 1) {
-            // getOrDefault 장바구니에 있으면 → 현재 수량 + 1, 없으면 → 0 + 1
-            cartItems.put(product, cartItems.getOrDefault(product, 0) + 1);
-            System.out.println(product.getProductName() + "가 장바구니에 추가되었습니다.\n");
+        if (choice == 1) {
+            System.out.println("\n담을 수량을 입력해 주세요.");
+            System.out.print("수량 : ");
+            int amount = readInt();
+            // 재고가 충분한지 판단
+            boolean check = checkStock(product, amount);
+            if (check) {
+                // getOrDefault 장바구니에 있으면 → 현재 수량, 없으면 → 0
+                cartItems.put(product, cartItems.getOrDefault(product, 0) + amount);
+                System.out.println(product.getProductName() + "가 " + amount + "개 장바구니에 추가되었습니다.\n");
+            }
         }
     }
 
@@ -87,8 +93,8 @@ public class Cart {
      * @param product
      * @return
      */
-    public boolean checkStock(Product product) {
-        if (product.getProductStock() > 0) {
+    public boolean checkStock(Product product, int amount) {
+        if (product.getProductStock() - amount >= 0) {
             return true;
         } else {
             System.out.println("재고가 부족한 상품입니다.");
@@ -118,7 +124,23 @@ public class Cart {
 
         if (choice == 1) {
             Customer customer = new Customer();
-            CustomerLevel customerLevel = customer.chooseCustomerLevel();
+            Customer loginCustomer;
+
+            try {
+                loginCustomer = customer.chooseCustomer();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+
+            CustomerLevel customerLevel = loginCustomer.getCustomerLevel();
+            System.out.println("주문 하시겠습니까?");
+            System.out.println("1. 주문 확정  2. 메인으로 돌아가기");
+
+            int confirm = readInt();
+            if (confirm != 1) {
+                return;
+            }
 
             double discount = customerLevel.getDiscount();
             double lastPrice = (double) totalPrice * (discount/100.0);
@@ -127,7 +149,11 @@ public class Cart {
             System.out.println("\n주문이 완료되었습니다! \n할인 전 금액: " + String.format("%,d원", totalPrice));
             System.out.println(customerLevel + " 등급 할인(" + customerLevel.getDiscount() + "%): " + String.format("-%,d원", lastPrice2));
             System.out.println("최종 결제 금액: " + String.format("%,d원", (totalPrice-lastPrice2)));
+
+            // 재고 수량 변경
             reduceStock();
+            // 사용자 등급 변경
+            loginCustomer.updateLevel(totalPrice-lastPrice2);
         } else if (choice == 2) {
             System.out.print("제거할 상품명을 입력하세요: ");
             String name = sc.nextLine();
@@ -149,7 +175,7 @@ public class Cart {
             int beforeStock = product.getProductStock();
             int afterStock = product.getProductStock() - count;
             product.setProductStock(afterStock);
-            System.out.println(product.getProductName() + " 재고가 " +
+            System.out.println("\n" + product.getProductName() + " 재고가 " +
                     beforeStock + "개 -> " + afterStock + "개로 업데이트 되었습니다.");
         }
         System.out.println();

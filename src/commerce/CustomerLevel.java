@@ -16,4 +16,16 @@ public enum CustomerLevel {
     public int getDiscount() {
         return discount;
     }
+
+    public static CustomerLevel fromTotalPrice(int totalPrice) {
+        if (totalPrice < 500000) {
+            return BRONZE;
+        } else if (totalPrice < 1000000) {
+            return SILVER;
+        } else if (totalPrice < 2000000) {
+            return GOLD;
+        } else {
+            return PLATINUM;
+        }
+    }
 }
