@@ -62,7 +62,7 @@ public class Cart {
 
         product.toString();
         System.out.println("\n위 상품을 장바구니에 추가하시겠습니까?");
-        System.out.println("1. 확인        2. 취소");
+        System.out.println("1. 확인    2. 취소");
         int choice = readInt();
 
         if (choice == 2) {
@@ -76,7 +76,7 @@ public class Cart {
 
         if (choice == 1) {
             System.out.println("\n담을 수량을 입력해 주세요.");
-            System.out.print("수량 : ");
+            System.out.print("수량: ");
             int amount = readInt();
             // 재고가 충분한지 판단
             boolean check = checkStock(product, amount);
@@ -136,7 +136,7 @@ public class Cart {
 
             CustomerLevel customerLevel = loginCustomer.getCustomerLevel();
             System.out.println("주문 하시겠습니까?");
-            System.out.println("1. 주문 확정  2. 메인으로 돌아가기");
+            System.out.println("1. 주문 확정    2. 메인으로 돌아가기");
 
             int confirm = readInt();
             if (confirm != 1) {

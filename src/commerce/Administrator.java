@@ -108,7 +108,7 @@ public class Administrator {
 
         System.out.println("\n"+String.format("%-12s | %,10d원 | %-15s | 재고: %3d개", productName, productPrice, productExplanation, productStock));
         System.out.println("위 정보로 상품을 추가하시겠습니까?");
-        System.out.println("1. 확인   2. 취소");
+        System.out.println("1. 확인    2. 취소");
         int choice2 = readInt();
 
         if (choice2 == 1) {
@@ -235,7 +235,7 @@ public class Administrator {
 
         System.out.println("\n" + targetProduct.toString());
         System.out.println("위 상품을 삭제하시겠습니까?");
-        System.out.println("1. 확인   2. 취소");
+        System.out.println("1. 확인    2. 취소");
         int choice = readInt();
 
         if (choice == 1) {

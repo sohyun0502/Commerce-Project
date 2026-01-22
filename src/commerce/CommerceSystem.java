@@ -64,13 +64,14 @@ public class CommerceSystem {
                 case 4:
                 case 5:
                     if (cart.getCartItems().isEmpty()) {
-                        System.out.println("장바구니가 비어 있습니다.");
-                    }
-                    if (choice == 4) {
-                        cart.showCart();
+                        System.out.println("잘못된 입력입니다.");
                     } else {
-                        System.out.println("진행중인 주문을 취소합니다.\n");
-                        cart.clear();
+                        if (choice == 4) {
+                            cart.showCart();
+                        } else {
+                            System.out.println("진행중인 주문을 취소합니다.\n");
+                            cart.clear();
+                        }
                     }
                     break;
                 case 6:
