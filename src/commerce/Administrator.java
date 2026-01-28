@@ -134,7 +134,24 @@ public class Administrator {
         Category targetCategory = null;
 
         for (Category category : categories) {
-            for (Product product : category.getProducts()) {
+            SearchEngine searchEngine = new SearchEngine(category.getProducts());
+
+            // 재귀
+            targetProduct = searchEngine.binarySearchRecursive(productName, 0, category.getProducts().size() - 1);
+
+            // 반복문
+            // targetProduct = searchEngine.binarySearchIterative(productName);
+
+            if(targetProduct != null) {
+                targetCategory = category;
+
+                System.out.println("현재 상품 정보: " + String.format("%-12s | %,10d원 | %-15s | 재고: %3d개",
+                        targetProduct.getProductName(), targetProduct.getProductPrice(),
+                        targetProduct.getProductExplanation(), targetProduct.getProductStock()));
+                break;
+            }
+
+            /*for (Product product : category.getProducts()) {
                 if (product.getProductName().equalsIgnoreCase(productName.trim())) {
                     targetProduct = product;
                     targetCategory = category;
@@ -144,7 +161,7 @@ public class Administrator {
                     break;
                 }
             }
-            if (targetProduct != null) break;
+            if (targetProduct != null) break;*/
         }
 
         if (targetProduct == null) {
@@ -216,7 +233,20 @@ public class Administrator {
         Category targetCategory = null;
 
         for (Category category : categories) {
-            for (Product product : category.getProducts()) {
+            SearchEngine searchEngine = new SearchEngine(category.getProducts());
+
+            // 재귀
+            targetProduct = searchEngine.binarySearchRecursive(productName, 0, category.getProducts().size() - 1);
+
+            // 반복문
+            // targetProduct = searchEngine.binarySearchIterative(productName);
+
+            if(targetProduct != null) {
+                targetCategory = category;
+                break;
+            }
+
+            /*for (Product product : category.getProducts()) {
                 if (product.getProductName().equals(productName)) {
                     targetProduct = product;
                     targetCategory = category;
@@ -225,7 +255,7 @@ public class Administrator {
             }
             if (targetProduct != null) {
                 break;
-            }
+            }*/
         }
 
         if(targetProduct == null) {

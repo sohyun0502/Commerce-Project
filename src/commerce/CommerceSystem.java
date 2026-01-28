@@ -31,6 +31,7 @@ public class CommerceSystem {
         }
         System.out.println("0. 종료        | 프로그램 종료");
         System.out.println("6. 관리자 모드");
+        System.out.println("7. 상품 검색 성능 테스트");
 
         if (!cart.getCartItems().isEmpty()) {
             System.out.println();
@@ -76,6 +77,10 @@ public class CommerceSystem {
                     break;
                 case 6:
                     admin.checkPassword();
+                    break;
+                case 7:
+                    PerformanceTest p = new PerformanceTest();
+                    p.compareSearchPerformance();
                     break;
                 default:
                     System.out.println("잘못된 입력입니다.");
